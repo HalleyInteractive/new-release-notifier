@@ -36,28 +36,34 @@
 
 		$xml = getLastFMXml('user.getnewreleases', $user['lastfm_key'], '&user=' . $user['lastfm_name']);
 
-		foreach ($xml->albums->album as $album)
+		if(isset($xml->albums->album))
 		{
-			$db_notification = new Notification();
-			$db_notification->user_id = $user['user_id'];
-			$db_notification->artist_mbid = $album->artist->mbid[0];
-			$db_notification->name = $album->name[0];
-			$db_notification->type = 'album';
-			$db_notification->active = 0;
+			foreach ($xml->albums->album as $album)
+			{
+				$db_notification = new Notification(null, true);
+				$db_notification->user_id = $user['user_id'];
+				$db_notification->artist_mbid = $album->artist->mbid[0];
+				$db_notification->name = $album->name[0];
+				$db_notification->type = 'album';
+				$db_notification->active = 0;
 
-			checkNotificationAndUpdate($db_notification, $album, 'album');
+				checkNotificationAndUpdate($db_notification, $album, 'album');
+			}
 		}
 
-		foreach ($xml->tracks->track as $track)
+		if(isset($xml->tracks->track))
 		{
-			$db_notification = new Notification();
-			$db_notification->user_id = $user['user_id'];
-			$db_notification->artist_mbid = $track->artist->mbid[0];
-			$db_notification->name = $track->name[0];
-			$db_notification->type = 'track';
-			$db_notification->active = 0;
+			foreach ($xml->tracks->track as $track)
+			{
+				$db_notification = new Notification(null, true);
+				$db_notification->user_id = $user['user_id'];
+				$db_notification->artist_mbid = $track->artist->mbid[0];
+				$db_notification->name = $track->name[0];
+				$db_notification->type = 'track';
+				$db_notification->active = 0;
 
-			checkNotificationAndUpdate($db_notification, $track, 'track');
+				checkNotificationAndUpdate($db_notification, $track, 'track');
+			}
 		}
 
 		foreach($xml as $key => $value)
@@ -101,6 +107,7 @@
 			$date = date("l jS \of F Y", strtotime($item[@releasedate]));
 			$message = "{$item->artist->name} has a new {$type}, {$item->name[0]}, coming up on {$date}.";
 			sendPushOverNotification($message);
+			echo "Send Pushover Notification <br />";
 		}
 
 		$db_notification->active = 1;
@@ -112,7 +119,7 @@
 	{
 		global $db_connection, $notifications, $notifications_id, $user, $report, $PUSHOVER_APP_TOKEN;
 		curl_setopt_array($ch = curl_init(), array(
-			URLOPT_RETURNTRANSFER, TRUE,
+			CURLOPT_RETURNTRANSFER => TRUE,
 			CURLOPT_URL => "https://api.pushover.net/1/messages.json", 
 			CURLOPT_POSTFIELDS => array(
 				"token" => $PUSHOVER_APP_TOKEN, 
@@ -138,7 +145,6 @@
 		foreach($object as $value) { array_push($values, $db_connection->real_escape_string($value)); }
 
 		$query = 'INSERT INTO `' . $table . '` (`' . implode('`, `', $properties) . '`) VALUES (\'' . implode($values, '\', \'') . '\') ON DUPLICATE KEY UPDATE ' . implode(', ', $updateArray);
-
 		return $query;
 	}
 	
