@@ -42,8 +42,8 @@
 			{
 				$db_notification = new Notification(null, true);
 				$db_notification->user_id = $user['user_id'];
-				$db_notification->artist_mbid = $album->artist->mbid[0];
-				$db_notification->name = $album->name[0];
+				$db_notification->artist_mbid = (string)$album->artist->mbid[0];
+				$db_notification->name = (string)$album->name[0];
 				$db_notification->type = 'album';
 				$db_notification->active = 0;
 
@@ -57,8 +57,8 @@
 			{
 				$db_notification = new Notification(null, true);
 				$db_notification->user_id = $user['user_id'];
-				$db_notification->artist_mbid = $track->artist->mbid[0];
-				$db_notification->name = $track->name[0];
+				$db_notification->artist_mbid = (string)$track->artist->mbid[0];
+				$db_notification->name = (string)$track->name[0];
 				$db_notification->type = 'track';
 				$db_notification->active = 0;
 
@@ -107,12 +107,10 @@
 			$date = date("l jS \of F Y", strtotime($item[@releasedate]));
 			$message = "{$item->artist->name} has a new {$type}, {$item->name[0]}, coming up on {$date}.";
 			sendPushOverNotification($message);
-			echo "Send Pushover Notification <br />";
 		}
 
 		$db_notification->active = 1;
 		$insertResult = $db_connection->query(insert_update_query_from_object($db_notification, 'notification'));
-
 	}
 
 	function sendPushOverNotification($message)
