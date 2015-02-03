@@ -26,7 +26,9 @@ var userSchema = new Schema(
 	picture: {type: String},
 	gender: {type: String},
 	providers: {type: Object},
-	notificationproviders: {type: Object}
+	notificationproviders: {type: Object},
+	crontime: {type: String, default: '* 00 11 * * *'},
+	timezone: {type: String, default: 'Europe/Amsterdam'}
 }, { autoIndex: false });
 
 userSchema.plugin(findOrCreate);

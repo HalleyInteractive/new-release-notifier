@@ -38,6 +38,7 @@
     "serve-static": "~1.7.1",
     "query-string": "~1.0.0",
     "request": "~2.51.0",
-    "pushbullet": "~1.4.2"
+    "pushbullet": "~1.4.2",
+    "cron": "~1.0.6"
   }
 }
