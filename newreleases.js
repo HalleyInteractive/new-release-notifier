@@ -5,7 +5,7 @@ module.exports = function()
 	var scope = this;
 	this.Album = require(__dirname + '/db/album.js');
 	this.LastFM = require(__dirname + '/lastfm.js');
-	this.PushBullet = require('pushbullet');
+	this.PushBullet = require(__dirname + '/pushbullet');
 
 	this.user = {};
 
@@ -37,14 +37,10 @@ module.exports = function()
 					console.log("Created Album: " + album.name);
 					if(scope.user.notificationproviders.hasOwnProperty('pushbullet'))
 					{
-						var pusher = new scope.PushBullet(scope.user.notificationproviders.pushbullet.accesstoken);
-						var noteTitle = 'New album released';
-						var noteBody = album.artist.name + ' released a new album.\n' + album.name;
-						pusher.note(scope.user.notificationproviders.pushbullet.deviceidentifier, noteTitle, noteBody, function(error, response)
-						{
-							if(error){ console.log("Error notfying user: " + error); }
-							console.log("Notified About new Album");
-						});
+						scope.PushBullet({
+							title: album.artist.name + ' released a new album',
+							body: album.name
+						}, scope.user);
 					}
 				} else
 				{
