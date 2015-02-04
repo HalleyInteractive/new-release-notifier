@@ -15,7 +15,7 @@ module.exports = function()
 		scope.jobs.push(
 			new scope.CronJob(
 			{
-				cronTime: '10 * * * * *',
+				cronTime: '* 00 11 * * *',
 				onTick: scope.runCheck,
 				start: true,
 				timeZone: "Europe/Amsterdam"
