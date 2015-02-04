@@ -31,6 +31,9 @@ var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function callback() { console.log('Connected to the database'); });
 
+var cj = new CronJobs();
+cj.init();
+
 /**
  *  terminator === the termination handler
  *  Terminate server on receipt of the specified signal.
