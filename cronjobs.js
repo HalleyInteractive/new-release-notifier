@@ -11,16 +11,22 @@ module.exports = function()
 
 	this.init = function()
 	{
-		// TODO: select distinct crontime and timezone from database users
-		scope.jobs.push(
-			new scope.CronJob(
+		scope.User.find({active:true}).distinct('crontime', function(err, cronTimes)
+		{
+			cronTimes.forEach(function(cronTime)
 			{
-				cronTime: '* 00 11 * * *',
-				onTick: scope.runCheck,
-				start: true,
-				timeZone: "Europe/Amsterdam"
-			})
-		);
+				scope.jobs.push
+				(
+					new scope.CronJob(
+					{
+						cronTime: cronTime,
+						onTick: scope.runCheck,
+						start: true,
+						timeZone: "Europe/Amsterdam"
+					})
+				);
+			});
+		});
 	};
 
 	this.runCheck = function()
