@@ -19,6 +19,9 @@ module.exports = function()
 	this.parseNewReleases = function(err, req, releases)
 	{
 		if(err) { console.log('Error: ' + err); }
+		// Check if response is valid
+		// !releases.error;
+
 		releases.albums.album.forEach(function(release)
 		{
 			release.user = scope.user._id;
