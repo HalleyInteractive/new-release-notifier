@@ -5,12 +5,13 @@ module.exports = function()
 	var scope = this;
 
 	this.CronJob = require('cron').CronJob;
-	this.NewReleases = require(__dirname + '/newreleases');
-	this.User = require(__dirname + '/db/user');
+	this.NewReleases = require(__dirname + '/new-release-checker');
+	this.User = require(__dirname + '/../db/user');
 	this.jobs = [];
 
 	this.init = function()
 	{
+		// TODO: Distinct cron time and time zone
 		scope.User.find({active:true}).distinct('crontime', function(err, cronTimes)
 		{
 			cronTimes.forEach(function(cronTime)

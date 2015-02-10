@@ -1,7 +1,7 @@
 #!/bin/env node
 
 var mongoose = require('mongoose');
-var CronJobs = require(__dirname + '/cronjobs');
+var CronJobs = require(__dirname + '/new-release-checker/cronjob');
 
 //  Set the environment variables we need.
 global.nrn = {};
