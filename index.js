@@ -2,7 +2,7 @@
 
 var mongoose = require('mongoose');
 var CronJobs = require(__dirname + '/new-release-checker/cronjob');
-var Express = require(__dirname + '/express');
+var Express = require(__dirname + '/express-server');
 
 //  Set the environment variables we need.
 global.nrn = {};
@@ -34,6 +34,8 @@ db.once('open', function callback() { console.log('Connected to the database'); 
 
 var cj = new CronJobs();
 cj.init();
+
+Express.listen(global.nrn.port);
 
 /**
  *  terminator === the termination handler
