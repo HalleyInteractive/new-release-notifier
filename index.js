@@ -2,6 +2,7 @@
 
 var mongoose = require('mongoose');
 var CronJobs = require(__dirname + '/new-release-checker/cronjob');
+var Express = require(__dirname + '/express');
 
 //  Set the environment variables we need.
 global.nrn = {};
