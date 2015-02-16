@@ -7,12 +7,13 @@ module.exports = function()
 	this.CronJob = require('cron').CronJob;
 	this.NewReleases = require(__dirname + '/new-release-checker');
 	this.User = require(__dirname + '/../db/user');
+	this.masterCronJob = undefined;
 	this.runningJobs = [];
 	this.runningJobsSettings = {};
 
 	this.init = function()
 	{
-		var masterJob = new scope.CronJob(
+		scope.masterCronJob = new scope.CronJob(
 		{
 			cronTime: '00 * * * * *',
 			onTick: scope.addNewCronJobs,
