@@ -7,26 +7,49 @@ module.exports = function()
 	this.CronJob = require('cron').CronJob;
 	this.NewReleases = require(__dirname + '/new-release-checker');
 	this.User = require(__dirname + '/../db/user');
-	this.jobs = [];
+	this.runningJobs = [];
+	this.runningJobsSettings = {};
 
 	this.init = function()
 	{
-		// TODO: Distinct cron time and time zone
-		scope.User.find({active:true}).distinct('crontime', function(err, cronTimes)
+		var masterJob = new scope.CronJob(
 		{
-			cronTimes.forEach(function(cronTime)
+			cronTime: '00 * * * * *',
+			onTick: scope.addNewCronJobs,
+			start: true,
+			timeZone: 'Europe/Amsterdam'
+		});
+		scope.addNewCronJobs();
+	};
+
+	this.addNewCronJobs = function()
+	{
+		scope.User.find({active:true}).select({crontime: 1, timezone: 1, _id:0}).lean(true).exec(function(err, cronJobs)
+		{
+			cronJobs.forEach(function(job)
 			{
-				scope.jobs.push
-				(
-					new scope.CronJob(
-					{
-						cronTime: cronTime,
-						onTick: scope.runCheck,
-						start: true,
-						timeZone: "Europe/Amsterdam"
-					})
-				);
+				if(typeof scope.runningJobsSettings[job.timezone] === 'undefined')
+				{
+					scope.runningJobsSettings[job.timezone] = [];
+				}
+				if(scope.runningJobsSettings[job.timezone].indexOf(job.crontime) === -1)
+				{
+					scope.runningJobs.push
+					(
+						new scope.CronJob(
+						{
+							cronTime: job.crontime,
+							onTick: scope.runCheck,
+							start: true,
+							timeZone: job.timezone
+						})
+					);
+					console.log("CRONJOB ADDED:");
+					console.log(job);
+					scope.runningJobsSettings[job.timezone].push(job.crontime);
+				}
 			});
+			console.log("------");
 		});
 	};
 
