@@ -26,12 +26,10 @@ module.exports = function()
 	{
 		scope.User.find({active:true}).select({crontime: 1, timezone: 1, _id:0}).lean(true).exec(function(err, cronJobs)
 		{
+			// ADD NEW CRONJOBS
 			cronJobs.forEach(function(job)
 			{
-				if(typeof scope.runningJobsSettings[job.timezone] === 'undefined')
-				{
-					scope.runningJobsSettings[job.timezone] = [];
-				}
+				if(typeof scope.runningJobsSettings[job.timezone] === 'undefined') { scope.runningJobsSettings[job.timezone] = []; } // Init array
 				if(scope.runningJobsSettings[job.timezone].indexOf(job.crontime) === -1)
 				{
 					scope.runningJobs.push
@@ -44,12 +42,31 @@ module.exports = function()
 							timeZone: job.timezone
 						})
 					);
-					console.log("CRONJOB ADDED:");
-					console.log(job);
+					console.log("CRONJOB ADDED> Time: %s, Zone: %s", job.crontime, job.timezone);
 					scope.runningJobsSettings[job.timezone].push(job.crontime);
 				}
 			});
-			console.log("------");
+
+			// SEARCH FOR REDUNDANT CRONJOBS
+			for(var r = scope.runningJobs.length-1; r >= 0 ; r--)
+			{
+				var runningJob = scope.runningJobs[r];
+				var redundant = true;
+				for(var c = 0; c < cronJobs.length; c++)
+				{
+					if(cronJobs[c].crontime == runningJob.cronTime && cronJobs[c].timezone == runningJob.cronTime.zone)
+					{
+						redundant = false;
+						break;
+					}
+				}
+				if(redundant)
+				{
+					console.log("CRONJOB REMOVED> Time: %s, Zone: %s", runningJob.cronTime, runningJob.cronTime.zone);
+					runningJob.stop();
+					scope.runningJobs.splice(r, 1);
+				}
+			}
 		});
 	};
 
