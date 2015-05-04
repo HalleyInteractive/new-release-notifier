@@ -1,24 +1,7 @@
-<div class="main container">
-	<h3>{{user.username}}</h3>
+<h3>{{user.username}}</h3>
+<h4>New release providers</h4>
 
-	<h4 class="ui header">New release providers</h4>
-	{{#if user.providers.lastfm}}
-		<div class="ui form">
-			<div class="field">
-				<label>Username</label>
-				<div class="ui icon input">
-					<input type="text" name="lastfm.username" value="{{user.providers.lastfm.username}}">
-					<i class="user icon"></i>
-				</div>
-			</div>
-			<div class="field">
-				<label>API Key</label>
-				<div class="ui icon input">
-					<input type="text" name="lastfm.apikey" value="{{user.providers.lastfm.apikey}}">
-					<i class="privacy icon"></i>
-				</div>
-			</div>
-		</div>
-	{{/if}}
-
-</div>
+<label>Username</label>
+<input type="text" name="lastfm.username" value="{{user.providers.lastfm.username}}">
+<label>API Key</label>
+<input type="text" name="lastfm.apikey" value="{{user.providers.lastfm.apikey}}">

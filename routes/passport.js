@@ -8,7 +8,7 @@ var User = require(__dirname + '/../db/user.js');
 
 router.get('/auth/google', passport.authenticate('google', {scope: 'https://www.googleapis.com/auth/userinfo.email'}));
 router.get('/auth/google/callback', passport.authenticate('google', { successRedirect:'/login/success', failureRedirect: '/login' }));
-router.get('/login', function(req, res) { res.render('login', {page:'login'}); });
+router.get('/login', function(req, res) { res.render('login'); });
 router.get('/login/success', function(req, res)
 {
 	var redirect_to = req.session.redirect_to ? req.session.redirect_to : '/profile';
