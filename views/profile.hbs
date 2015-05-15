@@ -1,7 +1,9 @@
 <h3>{{user.username}}</h3>
 <h4>New release providers</h4>
 
-<label>Username</label>
-<input type="text" name="lastfm.username" value="{{user.providers.lastfm.username}}">
-<label>API Key</label>
-<input type="text" name="lastfm.apikey" value="{{user.providers.lastfm.apikey}}">
+<div ng-controller='provider-lastfm as lastfm'>
+  <label>Username</label>
+  <input type="text" name="lastfm.username" value="{{user.providers.lastfm.username}}" ng-required="true">
+  <label>API Key</label>
+  <input type="text" name="lastfm.apikey" value="{{user.providers.lastfm.apikey}}" ng-required="true">
+</div>
