@@ -13,7 +13,11 @@ var routes =
 {
 	index: require('./routes/index'),
 	passport: require('./routes/passport'),
-	users: require('./routes/users')
+	authenticated:
+	{
+		users: require('./routes/users'),
+		api_profile: require('./routes/api/profile')
+	}
 };
 
 var sessionMiddleware = session(
@@ -63,8 +67,13 @@ app.use(function(req, res, next)
 });
 
 // AUTHENTICATED ROUTES
-app.use('/', routes.users.router);
+for (var routeName in routes.authenticated) {
+	console.log(routeName);
+	if (routes.authenticated.hasOwnProperty(routeName)) {
 
+		app.use('/', routes.authenticated[routeName].router);
+	}
+}
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next)
