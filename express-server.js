@@ -11,11 +11,9 @@ var MongoStore = require('connect-mongo')(session);
 
 var routes =
 {
-	index: require('./routes/index'),
 	passport: require('./routes/passport'),
 	authenticated:
 	{
-		users: require('./routes/users'),
 		api_profile: require('./routes/api/profile')
 	}
 };
@@ -33,10 +31,6 @@ var sessionMiddleware = session(
 
 var app = express();
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'hbs');
-
 // uncomment after placing your favicon in /public
 //app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('dev'));
@@ -50,16 +44,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Passport init
 app.use(routes.passport.passport.initialize());
 app.use(routes.passport.passport.session());
-
-app.use('/', routes.index.router);
 app.use('/', routes.passport.router);
 
-app.use(function(req, res, next)
+app.use('/api/*', function(req, res, next)
 {
 	if(req.user === undefined)
 	{
-		req.session.redirect_to = req.url;
-		res.redirect('/login');
+		res.status(401).end();
 	} else
 	{
 		next();
@@ -67,10 +58,10 @@ app.use(function(req, res, next)
 });
 
 // AUTHENTICATED ROUTES
-for (var routeName in routes.authenticated) {
-	console.log(routeName);
-	if (routes.authenticated.hasOwnProperty(routeName)) {
-
+for(var routeName in routes.authenticated)
+{
+	if(routes.authenticated.hasOwnProperty(routeName))
+	{
 		app.use('/', routes.authenticated[routeName].router);
 	}
 }
@@ -78,19 +69,18 @@ for (var routeName in routes.authenticated) {
 // catch 404 and forward to error handler
 app.use(function(req, res, next)
 {
-	var err = new Error('Not Found');
-	err.status = 404;
-	next(err);
+	console.log('Index');
+    res.sendfile(__dirname+'/public/index.html');
 });
 
 // error handlers
 
 // development error handler
 // will print stacktrace
-if (app.get('env') === 'development')
+if(app.get('env') === 'development')
 {
 	app.use(function(err, req, res, next)
-{
+	{
 		res.status(err.status || 500);
 		res.render('error', {
 			message: err.message,
