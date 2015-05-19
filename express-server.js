@@ -69,7 +69,6 @@ for(var routeName in routes.authenticated)
 // catch 404 and forward to error handler
 app.use(function(req, res, next)
 {
-	console.log('Index');
     res.sendfile(__dirname+'/public/index.html');
 });
 
