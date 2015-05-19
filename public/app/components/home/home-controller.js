@@ -1,6 +1,6 @@
 (function() {
     'use strict';
-    anguler.module('newReleaseNotifier').controller('homeCtrl', function()
+    anguler.module('newReleaseNotifier').controller('HomeCtrl', function()
     {
         console.log('Home Controller');
     });
