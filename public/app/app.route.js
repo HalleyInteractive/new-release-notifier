@@ -1,6 +1,6 @@
 (function() {
     'use strict';
-    angular.module('newReleaseNotifier').config(['$routeProvider', function($routeProvider) {
+    angular.module('newReleaseNotifier').config(function($routeProvider, $locationProvider) {
         $routeProvider.
         when('/', {
             templateUrl: 'app/components/home/home-view.html',
@@ -22,5 +22,5 @@
         $locationProvider.html5Mode(true);
         $locationProvider.hashPrefix('!');
 
-    }]);
+    });
 }());
