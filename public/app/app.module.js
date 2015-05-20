@@ -1,4 +1,4 @@
 (function() {
     'use strict';
-    angular.module('newReleaseNotifier', ['ngRoute']);
+    angular.module('newReleaseNotifier', ['ngRoute', 'ngResource']);
 }());
