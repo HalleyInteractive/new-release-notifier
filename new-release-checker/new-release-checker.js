@@ -3,9 +3,9 @@
 module.exports = function()
 {
 	var scope = this;
-	this.Album = require(__dirname + '/db/album.js');
-	this.LastFM = require(__dirname + '/lastfm.js');
-	this.PushBullet = require(__dirname + '/pushbullet');
+	this.Album = require(__dirname + '/../db/album');
+	this.LastFM = require(__dirname + '/release-providers/lastfm');
+	this.PushBullet = require(__dirname + '/notification-providers/pushbullet');
 
 	this.user = {};
 

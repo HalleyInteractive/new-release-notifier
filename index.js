@@ -1,12 +1,12 @@
 #!/bin/env node
 
 var mongoose = require('mongoose');
-var CronJobs = require(__dirname + '/cronjobs');
+var CronJobs = require(__dirname + '/new-release-checker/cronjob');
 
 //  Set the environment variables we need.
 global.nrn = {};
 global.nrn.ipaddress = process.env.OPENSHIFT_NODEJS_IP;
-global.nrn.port      = process.env.OPENSHIFT_NODEJS_PORT || 8085;
+global.nrn.port = process.env.OPENSHIFT_NODEJS_PORT || 8085;
 global.nrn.environment = 'remote';
 
 if (typeof global.nrn.ipaddress === "undefined")
@@ -30,9 +30,13 @@ if(global.nrn.environment == 'local')
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function callback() { console.log('Connected to the database'); });
+global.nrn.mongoose = mongoose;
 
 var cj = new CronJobs();
 cj.init();
+
+var Express = require(__dirname + '/express-server');
+Express.listen(global.nrn.port);
 
 /**
  *  terminator === the termination handler
