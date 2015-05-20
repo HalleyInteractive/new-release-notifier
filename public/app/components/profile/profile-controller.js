@@ -1,7 +1,7 @@
 (function() {
     'use strict';
-    angular.module('newReleaseNotifier').controller('ProfileCtrl', function()
+    angular.module('newReleaseNotifier').controller('ProfileCtrl', function($scope, Profile)
     {
-        console.log('Profile Controller');
+        $scope.user = Profile.query();
     });
 }());
