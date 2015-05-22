@@ -9,7 +9,7 @@
               placeholder="Username"
               id="lastfm-username"
               ng-model-options="{ updateOn: 'blur' }"
-              ng-change="user.$save()"
+              ng-change="user.$save(profileSaveHandler)"
               ng-model="user.providers.lastfm.username">
         </div>
         <div class="six columns">
@@ -19,7 +19,7 @@
               type="text" placeholder="API Key"
               id="lastfm-api-key"
               ng-model-options="{ updateOn: 'blur' }"
-              ng-change="user.$save()"
+              ng-change="user.$save(profileSaveHandler)"
               ng-model="user.providers.lastfm.apikey">
         </div>
       </div>
