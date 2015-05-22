@@ -2,6 +2,7 @@
     'use strict';
     angular.module('newReleaseNotifier').controller('ProfileCtrl', function($scope, Profile, ngNotify)
     {
+        $scope.pageTitle = "Profile";
         $scope.user = Profile.get();
 
         $scope.profileSaveHandler = function()

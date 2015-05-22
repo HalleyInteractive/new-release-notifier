@@ -29,8 +29,17 @@ var userSchema = new Schema(
 	notificationproviders: {type: Object},
 	crontime: {type: String, default: '* 0 12 * * *'},
 	timezone: {type: String, default: 'Europe/Amsterdam'}
-}, { autoIndex: false });
+}, {
+	autoIndex: false,
+	toObject: {virtuals: true},
+    toJSON: {virtuals: true}
+	});
 
 userSchema.plugin(findOrCreate);
+
+userSchema.virtual('name.full').get(function()
+{
+	return this.name.first + ' ' + this.name.last;
+});
 
 module.exports = mongoose.model('User', userSchema);
