@@ -24,5 +24,32 @@
               ng-model="user.providers.lastfm.apikey">
         </div>
       </div>
+
+      <div class="row">
+          <div class="six columns">
+              <label for="pushbullet-accesstoken">Pushbullet accesstoken</label>
+              <input
+                  class="u-full-width"
+                  type="text"
+                  placeholder="Accesstoken"
+                  id="pushbullet-accesstoken"
+                  ng-model-options="{ updateOn: 'blur' }"
+                  ng-change="user.$save(getPushbulletDeviceList)"
+                  ng-model="user.notificationproviders.pushbullet.accesstoken">
+        </div>
+        <div class="six columns">
+              <label for="pushbullet-accesstoken">Device</label>
+              <select
+                  class="u-full-width"
+                  type="text"
+                  placeholder="Device"
+                  id="pushbullet-device"
+                  ng-options="device.iden as device.nickname for device in pushbulletDeviceList"
+                  ng-model-options="{ updateOn: 'blur' }"
+                  ng-change="user.$save(profileSaveHandler)"
+                  ng-model="user.notificationproviders.pushbullet.deviceidentifier"></select>
+        </div>
+      </div>
+
     </form>
 </div>
