@@ -6,6 +6,7 @@
 
         $scope.profileSaveHandler = function()
         {
+            // TODO: Check status code before saying everything have been saved ;)
             ngNotify.set('Your settings have been saved!', 'success');
         };
     });
