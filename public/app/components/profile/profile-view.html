@@ -13,16 +13,6 @@
               ng-change="user.$save(profileSaveHandler)"
               ng-model="user.providers.lastfm.username">
         </div>
-        <div class="six columns">
-          <label for="lastfm-api-key">Last FM API Key</label>
-          <input
-              class="u-full-width"
-              type="text" placeholder="API Key"
-              id="lastfm-api-key"
-              ng-model-options="{ updateOn: 'blur' }"
-              ng-change="user.$save(profileSaveHandler)"
-              ng-model="user.providers.lastfm.apikey">
-        </div>
       </div>
 
       <div class="row">

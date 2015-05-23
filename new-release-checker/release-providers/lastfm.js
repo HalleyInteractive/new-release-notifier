@@ -14,7 +14,7 @@ module.exports = function()
 		{
 			method: 'user.getnewreleases',
 			user: user.providers.lastfm.username,
-			api_key: user.providers.lastfm.apikey,
+			api_key: process.env.LASTFM_API_KEY,//user.providers.lastfm.apikey,
 			format: 'json'
 		});
 		scope.request.get({url:scope.endpoint + '?' + URLQuery, json:true}, callback);
