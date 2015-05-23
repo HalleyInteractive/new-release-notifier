@@ -18,6 +18,7 @@ if (typeof global.nrn.ipaddress === "undefined")
 }
 
 console.log(global.nrn);
+console.log(process.env);
 
 // DATABASE CONNECTION
 if(global.nrn.environment == 'local')
