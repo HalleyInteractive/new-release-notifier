@@ -6,4 +6,9 @@ build:
     # A step that executes `npm test` command
     # - npm-test
     # A step to install all packages from bower
-    - plasticine/bower-install@0.0.4
+    - script:
+        name: install bower
+        code: |
+          sudo npm install -g bower
+          bower install
+    - bundle-install
