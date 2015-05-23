@@ -11,6 +11,7 @@ router.get('/api/profile', function(req, res, next)
 
 router.post('/api/profile', function(req, res, next)
 {
+	delete req.body._id;
 	User.update({_id:req.user._id}, req.body, function(err)
 	{
 		if(err)
