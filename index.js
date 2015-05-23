@@ -25,8 +25,15 @@ if(global.nrn.environment == 'local')
 	mongoose.connect('mongodb://' + (process.env.OPENSHIFT_MONGODB_DB_HOST || global.nrn.ipaddress) + '/new-release-notifier');
 } else
 {
-	var dbname = process.env.MONGODB_DB || 'new-release-notifier';
-	mongoose.connect(process.env.OPENSHIFT_MONGODB_DB_URL + dbname);
+	var dbconnectionURL = 'mongodb://';
+	dbconnectionURL += process.env.MONGODB_USER + ':';
+	dbconnectionURL += process.env.MONGODB_PASS + '@';
+	dbconnectionURL += process.env.OPENSHIFT_MONGODB_DB_HOST + ':';
+	dbconnectionURL += process.env.OPENSHIFT_MONGODB_DB_PORT + '/';
+	dbconnectionURL += process.env.MONGODB_DB;
+	mongoose.connect(dbconnectionURL);
+
+	console.log("Connecting to: %s", dbconnectionURL);
 }
 
 var db = mongoose.connection;
