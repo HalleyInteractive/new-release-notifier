@@ -4,7 +4,7 @@
         {
             $scope.googleLogin = function()
             {
-                $window.location.href = '/auth/google'
+                $window.location.href = '/auth/google';
             }
         });
 }());

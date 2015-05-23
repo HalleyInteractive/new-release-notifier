@@ -4,9 +4,12 @@
     {
         return {
             restrict: "AE",
-            controller: function()
+            controller: function($scope, $window)
             {
-                console.log("Control the header");
+              $scope.googleLogin = function()
+              {
+                  $window.location.href = '/auth/logout';
+              };
             },
             controllerAs: 'headerCtrl',
             templateUrl: 'app/shared/header/header-view.html'

@@ -1,72 +1,73 @@
 <header></header>
-<div class="container">
-    <form>
-      <div class="row">
-        <div class="twelve columns">
-          <label for="lastfm-username">Last FM username</label>
-          <input
-              class="u-full-width"
-              type="text"
-              placeholder="Username"
-              id="lastfm-username"
-              ng-model-options="{ updateOn: 'blur' }"
-              ng-change="user.$save(profileSaveHandler)"
-              ng-model="user.providers.lastfm.username">
-        </div>
-      </div>
-
-      <div class="row">
-          <div class="six columns">
-              <label for="pushbullet-accesstoken">Pushbullet accesstoken</label>
-              <input
-                  class="u-full-width"
-                  type="text"
-                  placeholder="Accesstoken"
-                  id="pushbullet-accesstoken"
-                  ng-model-options="{ updateOn: 'blur' }"
-                  ng-change="user.$save(getPushbulletDeviceList)"
-                  ng-model="user.notificationproviders.pushbullet.accesstoken">
-        </div>
-        <div class="six columns">
-              <label for="pushbullet-accesstoken">Device</label>
-              <select
-                  class="u-full-width"
-                  type="text"
-                  placeholder="Device"
-                  id="pushbullet-device"
-                  ng-options="device.nickname for device in user.notificationproviders.pushbullet.deviceList track by device.iden"
-                  ng-model-options="{ updateOn: 'blur' }"
-                  ng-change="user.$save(profileSaveHandler)"
-                  ng-model="user.notificationproviders.pushbullet.device"></select>
-        </div>
-      </div>
-      <div class="row">
-        <div class="six columns">
-          <label for="lastfm-username">Hours</label>
-          <input
-              class="u-full-width"
-              type="number"
-              min="0"
-              max="24"
-              placeholder="Username"
-              id="lastfm-username"
-              ng-model-options="{ updateOn: 'blur' }"
-              ng-change="user.$save(profileSaveHandler)"
-              ng-model="user.crontimeObject.hours">
-        </div>
-        <div class="six columns">
-          <label for="lastfm-username">Minutes</label>
-          <input
-              class="u-full-width"
-              type="number"
-              min="0"
-              max="60"
-              placeholder="Username"
-              id="lastfm-username"
-              ng-model-options="{ updateOn: 'blur' }"
-              ng-change="user.$save(profileSaveHandler)"
-              ng-model="user.crontimeObject.minutes">
-        </div>
-      </div>
-    </form>
-</div>
+<form class="ui form">
+  <h4 class="ui horizontal header divider">
+    <i class="icon lastfm square"></i>
+    Last FM settings
+  </h4>
+  <div class="field">
+    <label for="lastfm-username">Last FM username</label>
+    <input
+        type="text"
+        placeholder="Username"
+        id="lastfm-username"
+        ng-model-options="{ updateOn: 'blur' }"
+        ng-change="user.$save(profileSaveHandler)"
+        ng-model="user.providers.lastfm.username">
+  </div>
+  <h4 class="ui horizontal header divider">
+    <i class="icon alarm"></i>
+    Pushbullet settings
+  </h4>
+  <div class="two fields">
+    <div class="field">
+      <label for="pushbullet-accesstoken">Pushbullet accesstoken</label>
+      <input
+          type="text"
+          placeholder="Accesstoken"
+          id="pushbullet-accesstoken"
+          ng-model-options="{ updateOn: 'blur' }"
+          ng-change="user.$save(getPushbulletDeviceList)"
+          ng-model="user.notificationproviders.pushbullet.accesstoken">
+    </div>
+    <div class="field">
+      <label for="pushbullet-accesstoken">Device</label>
+      <select
+          class="ui dropdown"
+          id="pushbullet-device"
+          ng-options="device.nickname for device in user.notificationproviders.pushbullet.deviceList track by device.iden"
+          ng-model-options="{ updateOn: 'blur' }"
+          ng-change="user.$save(profileSaveHandler)"
+          ng-model="user.notificationproviders.pushbullet.device"></select>
+    </div>
+  </div>
+  <h4 class="ui horizontal header divider">
+    <i class="icon wait"></i>
+    Cronjob settings
+  </h4>
+  <div class="two fields">
+    <div class="field">
+      <label for="lastfm-username">Hours</label>
+      <input
+          type="number"
+          min="0"
+          max="24"
+          placeholder="Username"
+          id="lastfm-username"
+          ng-model-options="{ updateOn: 'blur' }"
+          ng-change="user.$save(profileSaveHandler)"
+          ng-model="user.crontimeObject.hours">
+    </div>
+    <div class="field">
+      <label for="lastfm-username">Minutes</label>
+      <input
+          type="number"
+          min="0"
+          max="60"
+          placeholder="Username"
+          id="lastfm-username"
+          ng-model-options="{ updateOn: 'blur' }"
+          ng-change="user.$save(profileSaveHandler)"
+          ng-model="user.crontimeObject.minutes">
+    </div>
+  </div>
+</form>

@@ -1,7 +1,10 @@
 (function() {
     'use strict';
-    angular.module('newReleaseNotifier').controller('HomeCtrl', function()
+    angular.module('newReleaseNotifier').controller('HomeCtrl', function($scope, $window)
     {
-        console.log('Home Controller');
+      $scope.googleLogin = function()
+      {
+          $window.location.href = '/auth/google';
+      }
     });
 }());
