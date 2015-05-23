@@ -2,7 +2,7 @@
 <div class="container">
     <form>
       <div class="row">
-        <div class="six columns">
+        <div class="twelve columns">
           <label for="lastfm-username">Last FM username</label>
           <input
               class="u-full-width"
@@ -40,6 +40,33 @@
                   ng-model="user.notificationproviders.pushbullet.deviceidentifier"></select>
         </div>
       </div>
-
+      <div class="row">
+        <div class="six columns">
+          <label for="lastfm-username">Hours</label>
+          <input
+              class="u-full-width"
+              type="number"
+              min="0"
+              max="24"
+              placeholder="Username"
+              id="lastfm-username"
+              ng-model-options="{ updateOn: 'blur' }"
+              ng-change="user.$save(profileSaveHandler)"
+              ng-model="user.crontimeObject.hours">
+        </div>
+        <div class="six columns">
+          <label for="lastfm-username">Minutes</label>
+          <input
+              class="u-full-width"
+              type="number"
+              min="0"
+              max="60"
+              placeholder="Username"
+              id="lastfm-username"
+              ng-model-options="{ updateOn: 'blur' }"
+              ng-change="user.$save(profileSaveHandler)"
+              ng-model="user.crontimeObject.minutes">
+        </div>
+      </div>
     </form>
 </div>

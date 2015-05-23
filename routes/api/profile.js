@@ -11,6 +11,9 @@ router.get('/api/profile', function(req, res, next)
 
 router.post('/api/profile', function(req, res, next)
 {
+	// convert cron object to string
+	req.body.crontime = getCronTimeString(req.body.crontimeObject);
+
 	delete req.body._id;
 	User.update({_id:req.user._id}, req.body, function(err)
 	{
@@ -52,5 +55,30 @@ router.get('/api/profile/pushbullet/devicelist', function(req, res, next)
 		res.sendStatus(500);
 	}
 });
+
+function getCronTimeString(cronTimeObject)
+{
+	var crontimeString = "00"; // Seconds
+	crontimeString += " " + getCronStringValue(cronTimeObject.minutes, 60);
+	crontimeString += " " + getCronStringValue(cronTimeObject.hours, 24);
+	crontimeString += " " + getCronStringValue(cronTimeObject.day, 31);
+	crontimeString += " " + getCronStringValue(cronTimeObject.month, 12);
+	crontimeString += " " + getCronStringValue(cronTimeObject.weekday, 6);
+	return crontimeString;
+}
+
+function getCronStringValue(number, max)
+{
+	if(number < 0)
+	{
+		return "*";
+	} else if(number > max)
+	{
+		return max > 9 ? max.toString() : "0" + max.toString();
+	} else
+	{
+		return number > 9 ? number.toString() : "0" + number.toString();
+	}
+}
 
 module.exports.router = router;
