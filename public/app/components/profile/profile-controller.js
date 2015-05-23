@@ -3,7 +3,6 @@
     angular.module('newReleaseNotifier').controller('ProfileCtrl', function($scope, $http, Profile, ngNotify)
     {
         $scope.pageTitle = "Profile";
-        $scope.pushbulletDeviceList = [];
         $scope.user = Profile.get();
 
         $scope.profileSaveHandler = function()
@@ -24,7 +23,7 @@
             if(response !== '')
             {
                 // TODO: Save complete device to users profile. Including the nickname
-                $scope.pushbulletDeviceList = response.devices;
+                $scope.user.notificationproviders.pushbullet.deviceList = response.devices;
             } else {
                 console.log("Accesstoken incorrect");
                 ngNotify.set('Accesstoken incorrect', 'warn');

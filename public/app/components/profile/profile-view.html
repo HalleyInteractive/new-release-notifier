@@ -34,10 +34,10 @@
                   type="text"
                   placeholder="Device"
                   id="pushbullet-device"
-                  ng-options="device.iden as device.nickname for device in pushbulletDeviceList"
+                  ng-options="device.nickname for device in user.notificationproviders.pushbullet.deviceList track by device.iden"
                   ng-model-options="{ updateOn: 'blur' }"
                   ng-change="user.$save(profileSaveHandler)"
-                  ng-model="user.notificationproviders.pushbullet.deviceidentifier"></select>
+                  ng-model="user.notificationproviders.pushbullet.device"></select>
         </div>
       </div>
       <div class="row">
