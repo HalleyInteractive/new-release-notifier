@@ -45,5 +45,8 @@
     "request": "~2.51.0",
     "serve-favicon": "~2.2.0",
     "stylus": "0.42.3"
+  },
+  "devDependencies": {
+    "bower": "^1.4.1"
   }
 }
