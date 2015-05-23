@@ -22,8 +22,7 @@ var sessionMiddleware = session(
 {
 	secret: 'fg783#$%f',
 	store: new MongoStore({
-		mongoose_connection:global.nrn.mongoose.connections[0],
-		db:global.nrn.mongoose.connection.db
+		mongooseConnection:global.nrn.mongoose.connection
 	}),
 	resave: true,
 	saveUninitialized: true
