@@ -58,7 +58,7 @@ router.get('/api/profile/pushbullet/devicelist', function(req, res, next)
 
 function getCronTimeString(cronTimeObject)
 {
-	var crontimeString = "00"; // Seconds
+	var crontimeString = "0"; // Seconds
 	crontimeString += " " + getCronStringValue(cronTimeObject.minutes, 60);
 	crontimeString += " " + getCronStringValue(cronTimeObject.hours, 24);
 	crontimeString += " " + getCronStringValue(cronTimeObject.day, 31);
@@ -74,10 +74,10 @@ function getCronStringValue(number, max)
 		return "*";
 	} else if(number > max)
 	{
-		return max > 9 ? max.toString() : "0" + max.toString();
+		return max.toString();
 	} else
 	{
-		return number > 9 ? number.toString() : "0" + number.toString();
+		return number.toString();
 	}
 }
 

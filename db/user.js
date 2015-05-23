@@ -27,7 +27,7 @@ var userSchema = new Schema(
 	gender: {type: String},
 	providers: {type: Object},
 	notificationproviders: {type: Object},
-	crontime: {type: String, default: '00 00 12 * * *'},
+	crontime: {type: String, default: '0 0 12 * * *'},
 	crontimeObject: {
 		seconds: 	{type: Number, default: 0},
 		minutes: 	{type: Number, default: 0},
