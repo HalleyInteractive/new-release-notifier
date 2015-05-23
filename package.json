@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "postinstall": "bower cache clean && bower install"
+    "postinstall": "export HOME=$HOME/app-root/runtime/repo; bower cache clean && bower install"
   },
   "repository": {
     "type": "git",
