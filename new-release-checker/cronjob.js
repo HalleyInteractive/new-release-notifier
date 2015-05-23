@@ -80,6 +80,7 @@ module.exports = function()
 			if(err) { console.log('Error getting users from the database: '+ err); }
 			users.forEach(function(user)
 			{
+				console.log("Check for user %s", user.name.full);
 				var releases = new scope.NewReleases();
 				releases.checkNewReleases(user);
 			});

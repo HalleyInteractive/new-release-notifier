@@ -1,7 +1,10 @@
 (function() {
     'use strict';
-        angular.module('newReleaseNotifier').controller('LoginCtrl', function()
+        angular.module('newReleaseNotifier').controller('LoginCtrl', function($scope, $window)
         {
-            console.log('Login Controller');
+            $scope.googleLogin = function()
+            {
+                $window.location.href = '/auth/google'
+            }
         });
 }());

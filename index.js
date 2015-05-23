@@ -17,14 +17,23 @@ if (typeof global.nrn.ipaddress === "undefined")
 	global.nrn.environment = 'local';
 }
 
+console.log(global.nrn);
+
 // DATABASE CONNECTION
 if(global.nrn.environment == 'local')
 {
 	mongoose.connect('mongodb://' + (process.env.OPENSHIFT_MONGODB_DB_HOST || global.nrn.ipaddress) + '/new-release-notifier');
 } else
 {
-	var dbname = process.env.MONGODB_DB || 'new-release-notifier';
-	mongoose.connect(process.env.OPENSHIFT_MONGODB_DB_URL + dbname);
+	var dbconnectionURL = 'mongodb://';
+	dbconnectionURL += process.env.MONGODB_USER + ':';
+	dbconnectionURL += process.env.MONGODB_PASS + '@';
+	dbconnectionURL += process.env.OPENSHIFT_MONGODB_DB_HOST + ':';
+	dbconnectionURL += process.env.OPENSHIFT_MONGODB_DB_PORT + '/';
+	dbconnectionURL += process.env.MONGODB_DB;
+	mongoose.connect(dbconnectionURL);
+
+	console.log("Connecting to: %s", dbconnectionURL);
 }
 
 var db = mongoose.connection;
@@ -36,7 +45,13 @@ var cj = new CronJobs();
 cj.init();
 
 var Express = require(__dirname + '/express-server');
-Express.listen(global.nrn.port);
+var http = require('http').Server(Express);
+
+http.listen(global.nrn.port, global.nrn.ipaddress, function()
+{
+	console.log('%s: Node server started on %s:%d ...', Date(Date.now() ), global.nrn.ipaddress, global.nrn.port);
+});
+
 
 /**
  *  terminator === the termination handler
