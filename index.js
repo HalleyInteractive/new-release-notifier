@@ -38,7 +38,13 @@ var cj = new CronJobs();
 cj.init();
 
 var Express = require(__dirname + '/express-server');
-Express.listen(global.nrn.port);
+var http = require('http').Server(Express);
+
+http.listen(global.nrn.port, global.nrn.ipaddress, function()
+{
+	console.log('%s: Node server started on %s:%d ...', Date(Date.now() ), global.nrn.ipaddress, global.nrn.port);
+});
+
 
 /**
  *  terminator === the termination handler
