@@ -4,7 +4,8 @@
   "description": "Sends a PushOver notification when a new album/track is added to your Last.fm new releases list",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "postinstall": "bower cache clean && bower install"
   },
   "repository": {
     "type": "git",
@@ -44,9 +45,9 @@
     "query-string": "~1.0.0",
     "request": "~2.51.0",
     "serve-favicon": "~2.2.0",
-    "stylus": "0.42.3"
+    "stylus": "0.42.3",
+    "bower": "^1.4.1"
   },
   "devDependencies": {
-    "bower": "^1.4.1"
   }
 }

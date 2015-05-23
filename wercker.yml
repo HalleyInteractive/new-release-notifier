@@ -5,10 +5,9 @@ build:
     - npm-install
     # A step that executes `npm test` command
     # - npm-test
-    # A step to install all packages from bower
+deploy:
+  steps:
     - script:
-        name: install bower
+        name: Remove npm modules before deploy
         code: |
-          sudo npm install -g bower
-          bower install
-    - bundle-install
+          rm -rf node_modules
