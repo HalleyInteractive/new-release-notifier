@@ -4,9 +4,12 @@
     {
         return {
             restrict: "AE",
-            controller: function()
+            controller: function($scope, $http)
             {
-                console.log("Control the header");
+              $scope.logout = function()
+              {
+                  $http.get('/auth/logout');
+              };
             },
             controllerAs: 'headerCtrl',
             templateUrl: 'app/shared/header/header-view.html'

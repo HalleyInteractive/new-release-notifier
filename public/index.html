@@ -3,17 +3,18 @@
     <head>
         <title>New Release Notifier</title>
         <base href="/">
-        <link rel="stylesheet" type="text/css" href="assets/libs/normalize.css/normalize.css">
-        <link rel="stylesheet" type="text/css" href="assets/libs/skeleton/css/skeleton.css">
+        <link rel="stylesheet" type="text/css" href="assets/libs/semantic-ui/dist/semantic.min.css">
         <link rel="stylesheet" type="text/css" href="assets/libs/ng-notify/dist/ng-notify.min.css">
         <link rel="stylesheet" type="text/css" href="assets/css/new-release-notifier.css">
     </head>
     <body ng-app="newReleaseNotifier">
-        <ng-view></ng-view>
+        <div class="main container" ng-view></div>
         <script type="text/javascript" src="assets/libs/angular/angular.min.js"></script>
         <script type="text/javascript" src="assets/libs/angular-route/angular-route.min.js"></script>
         <script type="text/javascript" src="assets/libs/angular-resource/angular-resource.min.js"></script>
         <script type="text/javascript" src="assets/libs/ng-notify/dist/ng-notify.min.js"></script>
+        <script type="text/javascript" src="assets/libs/jquery/dist/jquery.min.js"></script>
+        <script type="text/javascript" src="assets/libs/semantic-ui/dist/semantic.min.js"></script>
         <script type="text/javascript" src="app/app.module.js"></script>
         <script type="text/javascript" src="app/app.route.js"></script>
         <script type="text/javascript" src="app/app.resource.js"></script>

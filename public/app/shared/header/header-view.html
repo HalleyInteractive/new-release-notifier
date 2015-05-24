@@ -1,8 +1,16 @@
-<div id="header" class="u-full-width">
-    <div class="back-btn"></div>
-    <div id="page-title">{{pageTitle}}</div>
-    <div id="user" class="u-pull-right">
-        <div id="name" class="u-pull-right">{{user.name.full}}</div>
-        <div id="image" class="u-pull-right"><img src="{{user.picture}}"></div>
+<div class="ui secondary pointing menu" id="header">
+  <a class="item">
+    <i class="home icon"></i>&nbsp;Home</a>
+  <a class="item">
+    <i class="mail icon"></i>&nbsp;Notifications</a>
+  <div class="right menu">
+    <div id="user" class="active item">
+        <div id="image" class=""><img src="{{user.picture}}"></div>
+        <div id="name" class="">{{user.name.full}}</div>
     </div>
+    <a class="ui item" ng-click="logout()">
+      Logout
+    </a>
+  </div>
 </div>
+<div class="row"></div>
