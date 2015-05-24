@@ -45,7 +45,8 @@ module.exports = function()
 							console.log("Created Album: " + album.name);
 							if(scope.user.notificationproviders.hasOwnProperty('pushbullet'))
 							{
-								scope.PushBullet({
+								console.log("Notify user of %s", album.name);
+								new scope.PushBullet({
 									title: album.artist.name + ' released a new album',
 									body: album.name
 								}, scope.user);
