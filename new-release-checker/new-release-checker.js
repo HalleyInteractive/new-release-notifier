@@ -22,34 +22,41 @@ module.exports = function()
 		// Check if response is valid
 		// !releases.error;
 
-		releases.albums.album.forEach(function(release)
+		// TODO: Check for package to check if nested object is available
+		if(releases.albums)
 		{
-			release.user = scope.user._id;
-
-			var search =
+			if(releases.albums.album)
 			{
-				user: release.user,
-				mbid: release.mbid,
-				name: release.name
-			};
-
-			scope.Album.findOrCreate(search, release, function(err, album, created)
-			{
-				if(created)
+				releases.albums.album.forEach(function(release)
 				{
-					console.log("Created Album: " + album.name);
-					if(scope.user.notificationproviders.hasOwnProperty('pushbullet'))
+					release.user = scope.user._id;
+
+					var search =
 					{
-						scope.PushBullet({
-							title: album.artist.name + ' released a new album',
-							body: album.name
-						}, scope.user);
-					}
-				} else
-				{
-					console.log("Album existed: " + album.name);
-				}
-			});
-		});
+						user: release.user,
+						mbid: release.mbid,
+						name: release.name
+					};
+
+					scope.Album.findOrCreate(search, release, function(err, album, created)
+					{
+						if(created)
+						{
+							console.log("Created Album: " + album.name);
+							if(scope.user.notificationproviders.hasOwnProperty('pushbullet'))
+							{
+								scope.PushBullet({
+									title: album.artist.name + ' released a new album',
+									body: album.name
+								}, scope.user);
+							}
+						} else
+						{
+							console.log("Album existed: " + album.name);
+						}
+					});
+				});
+			}
+		}
 	};
 };
