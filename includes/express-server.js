@@ -3,7 +3,6 @@
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
-var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
@@ -30,14 +29,11 @@ var sessionMiddleware = session(
 
 var app = express();
 
-// uncomment after placing your favicon in /public
 app.use(favicon(global.nrn.base + '/public/favicon.ico'));
-//app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(sessionMiddleware);
-app.use(require('stylus').middleware(path.join(global.nrn.base, 'public')));
 app.use(express.static(path.join(global.nrn.base, 'public')));
 
 // Passport init
@@ -47,6 +43,7 @@ app.use('/', routes.passport.router);
 
 app.use('/api/*', function(req, res, next)
 {
+	// TODO: Is checking if req.user exists enough to determine if the user is logged in?
 	if(req.user === undefined)
 	{
 		res.status(401).end();
@@ -56,7 +53,7 @@ app.use('/api/*', function(req, res, next)
 	}
 });
 
-// AUTHENTICATED ROUTES
+// Include all routes that should be authenticated.
 for(var routeName in routes.authenticated)
 {
 	if(routes.authenticated.hasOwnProperty(routeName))
@@ -65,14 +62,13 @@ for(var routeName in routes.authenticated)
 	}
 }
 
-// catch 404 and forward to error handler
+// Catch all routes and serve the index.html
 app.use(function(req, res, next)
 {
     res.sendFile(global.nrn.base + '/public/index.html');
 });
 
 // error handlers
-
 // development error handler
 // will print stacktrace
 if(app.get('env') === 'development')
