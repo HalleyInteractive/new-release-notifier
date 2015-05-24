@@ -2,7 +2,7 @@
 
 var express = require('express');
 var router = express.Router();
-var User = require(__dirname + '/../../db/user.js');
+var User = require(global.nrn.base + '/db/user.js');
 
 router.get('/api/profile', function(req, res, next)
 {

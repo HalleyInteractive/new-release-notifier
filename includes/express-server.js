@@ -11,10 +11,10 @@ var MongoStore = require('connect-mongo')(session);
 
 var routes =
 {
-	passport: require('./routes/passport'),
+	passport: require(global.nrn.base + '/includes/routes/passport'),
 	authenticated:
 	{
-		api_profile: require('./routes/api/profile')
+		api_profile: require(global.nrn.base + '/includes/routes/api/profile')
 	}
 };
 
@@ -31,14 +31,14 @@ var sessionMiddleware = session(
 var app = express();
 
 // uncomment after placing your favicon in /public
-app.use(favicon(__dirname + '/public/favicon.ico'));
+app.use(favicon(global.nrn.base + '/public/favicon.ico'));
 //app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(sessionMiddleware);
-app.use(require('stylus').middleware(path.join(__dirname, 'public')));
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(require('stylus').middleware(path.join(global.nrn.base, 'public')));
+app.use(express.static(path.join(global.nrn.base, 'public')));
 
 // Passport init
 app.use(routes.passport.passport.initialize());
@@ -68,7 +68,7 @@ for(var routeName in routes.authenticated)
 // catch 404 and forward to error handler
 app.use(function(req, res, next)
 {
-    res.sendFile(__dirname+'/public/index.html');
+    res.sendFile(global.nrn.base + '/public/index.html');
 });
 
 // error handlers

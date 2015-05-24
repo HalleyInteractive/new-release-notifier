@@ -1,57 +1,37 @@
 #!/bin/env node
 
+/**
+* Sets up default settings that can be access globally
+**/
+var settings = require(__dirname + '/includes/settings.js');
+settings.base = __dirname;
+
+/**
+* Set up connection to the database
+**/
 var mongoose = require('mongoose');
-var CronJobs = require(__dirname + '/new-release-checker/cronjob');
-
-//  Set the environment variables we need.
-global.nrn = {};
-global.nrn.ipaddress = process.env.OPENSHIFT_NODEJS_IP;
-global.nrn.port = process.env.OPENSHIFT_NODEJS_PORT || 8085;
-global.nrn.environment = 'remote';
-
-if (typeof global.nrn.ipaddress === "undefined")
-{
-	//  allows us to run/test the app locally.
-	console.warn('No OPENSHIFT_NODEJS_IP var, using 127.0.0.1');
-	global.nrn.ipaddress = "127.0.0.1";
-	global.nrn.environment = 'local';
-}
-
-console.log(global.nrn);
-
-// DATABASE CONNECTION
-if(global.nrn.environment == 'local')
-{
-	mongoose.connect('mongodb://' + (process.env.OPENSHIFT_MONGODB_DB_HOST || global.nrn.ipaddress) + '/new-release-notifier');
-} else
-{
-	var dbconnectionURL = 'mongodb://';
-	dbconnectionURL += process.env.MONGODB_USER + ':';
-	dbconnectionURL += process.env.MONGODB_PASS + '@';
-	dbconnectionURL += process.env.OPENSHIFT_MONGODB_DB_HOST + ':';
-	dbconnectionURL += process.env.OPENSHIFT_MONGODB_DB_PORT + '/';
-	dbconnectionURL += process.env.MONGODB_DB;
-	mongoose.connect(dbconnectionURL);
-
-	console.log("Connecting to: %s", dbconnectionURL);
-}
-
-var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function callback() { console.log('Connected to the database'); });
+mongoose.connect(global.nrn.mongoConnectionString);
+mongoose.connection.on('error', console.error.bind(console, 'Database connection error:'));
+mongoose.connection.once('open', function callback() { console.log('Connected to the database'); });
 global.nrn.mongoose = mongoose;
 
-var cj = new CronJobs();
-cj.init();
+/**
+* CronJobs handles checking new releases and notifying users
+**/
+var Cronjob = require(__dirname + '/new-release-checker/cronjob');
+var cronjob = new Cronjob();
+cronjob.init();
 
-var Express = require(__dirname + '/express-server');
-var http = require('http').Server(Express);
-
+/**
+* Front end for the user is provided with express.
+* Also the API from the front end to the database.
+**/
+var express = require(__dirname + '/includes/express-server');
+var http = require('http').Server(express);
 http.listen(global.nrn.port, global.nrn.ipaddress, function()
 {
-	console.log('%s: Node server started on %s:%d ...', Date(Date.now() ), global.nrn.ipaddress, global.nrn.port);
+	console.log('%s: New Release Notifier server started on %s:%d ...', Date(Date.now() ), global.nrn.ipaddress, global.nrn.port);
 });
-
 
 /**
  *  terminator === the termination handler
@@ -62,7 +42,7 @@ function terminator(sig)
 {
 	if (typeof sig === "string")
 	{
-	   console.log('%s: Received %s - terminating sample app ...', Date(Date.now()), sig);
+	   console.log('%s: Received %s - terminating New Release Notifier', Date(Date.now()), sig);
 	   process.exit(1);
 	}
 	console.log('%s: Node server stopped.', Date(Date.now()) );

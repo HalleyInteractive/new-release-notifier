@@ -4,7 +4,7 @@ var express = require('express');
 var router = express.Router();
 var passport = require('passport');
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
-var User = require(__dirname + '/../db/user.js');
+var User = require(global.nrn.base + '/db/user.js');
 
 router.get('/auth/google', passport.authenticate('google', {scope: 'https://www.googleapis.com/auth/userinfo.email'}));
 router.get('/auth/google/callback', passport.authenticate('google', { successRedirect:'/login/success', failureRedirect: '/login' }));
@@ -24,7 +24,7 @@ router.get('/auth/logout', function(req, res)
 var googleStrategySettings = {};
 if(global.nrn.environment == 'local')
 {
-	var SecretSettingsFile = require(__dirname + '/../secrets.json');
+	var SecretSettingsFile = require(__dirname + '/../../secrets.json');
 	googleStrategySettings.client_id = SecretSettingsFile.auth.google.client_id;
 	googleStrategySettings.client_secret = SecretSettingsFile.auth.google.client_secret;
 	googleStrategySettings.callbackURL = 'http://' + global.nrn.ipaddress + ':' + global.nrn.port + '/auth/google/callback';
