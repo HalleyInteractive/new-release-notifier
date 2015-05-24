@@ -18,7 +18,7 @@ router.get('/login/success', function(req, res)
 router.get('/auth/logout', function(req, res)
 {
   req.logout();
-  res.status(401).end();
+  res.status(200).end();
 });
 
 var googleStrategySettings = {};
