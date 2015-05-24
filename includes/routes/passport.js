@@ -6,6 +6,9 @@ var passport = require('passport');
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 var User = require(global.nrn.base + '/db/user.js');
 
+/**
+* AUTH ROUTES
+**/
 router.get('/auth/google', passport.authenticate('google', {scope: 'https://www.googleapis.com/auth/userinfo.email'}));
 router.get('/auth/google/callback', passport.authenticate('google', { successRedirect:'/login/success', failureRedirect: '/login' }));
 router.get('/login/success', function(req, res)
@@ -21,29 +24,15 @@ router.get('/auth/logout', function(req, res)
   res.status(200).end();
 });
 
-var googleStrategySettings = {};
-if(global.nrn.environment == 'local')
-{
-	var SecretSettingsFile = require(__dirname + '/../../secrets.json');
-	googleStrategySettings.client_id = SecretSettingsFile.auth.google.client_id;
-	googleStrategySettings.client_secret = SecretSettingsFile.auth.google.client_secret;
-	googleStrategySettings.callbackURL = 'http://' + global.nrn.ipaddress + ':' + global.nrn.port + '/auth/google/callback';
-} else
-{
-	googleStrategySettings.client_id = process.env.GOOGLE_CLIENT_ID;
-	googleStrategySettings.client_secret = process.env.GOOGLE_CLIENT_SECRET;
-	googleStrategySettings.callbackURL = 'http://'+process.env.APP_URL+'/auth/google/callback';
-}
-
 /**
 * GOOGLE STRATEGY
 **/
 passport.use(new GoogleStrategy
 (
 	{
-		clientID: googleStrategySettings.client_id,
-		clientSecret: googleStrategySettings.client_secret,
-		callbackURL: googleStrategySettings.callbackURL
+		clientID: global.nrn.strategy.google.client_id,
+		clientSecret: global.nrn.strategy.google.client_secret,
+		callbackURL: global.nrn.strategy.google.callbackURL
 	},
 	function(accessToken, refreshToken, profile, done)
 	{
@@ -75,6 +64,9 @@ passport.use(new GoogleStrategy
 	}
 ));
 
+/**
+* SERIALIZING FUNCTIONS
+**/
 passport.serializeUser(function(user, done)
 {
 	User.findOne({'auth.provider': user.provider, 'auth.id': user.id.toString()}, function(err, dbUser)
