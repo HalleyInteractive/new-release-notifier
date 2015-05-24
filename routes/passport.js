@@ -15,6 +15,12 @@ router.get('/login/success', function(req, res)
 	res.redirect(redirect_to);
 });
 
+router.get('/auth/logout', function(req, res)
+{
+  req.logout();
+  res.status(401).end();
+});
+
 var googleStrategySettings = {};
 if(global.nrn.environment == 'local')
 {

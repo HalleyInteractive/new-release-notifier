@@ -4,11 +4,11 @@
     {
         return {
             restrict: "AE",
-            controller: function($scope, $window)
+            controller: function($scope, $http)
             {
-              $scope.googleLogin = function()
+              $scope.logout = function()
               {
-                  $window.location.href = '/auth/logout';
+                  $http.get('/auth/logout');
               };
             },
             controllerAs: 'headerCtrl',
