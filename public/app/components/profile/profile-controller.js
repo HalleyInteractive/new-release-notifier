@@ -22,7 +22,6 @@
         {
             if(response !== '')
             {
-                // TODO: Save complete device to users profile. Including the nickname
                 $scope.user.notificationproviders.pushbullet.deviceList = response.devices;
             } else {
                 console.log("Accesstoken incorrect");
