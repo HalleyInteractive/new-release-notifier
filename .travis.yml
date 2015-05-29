@@ -1,5 +1,15 @@
 language: node_js
 node_js:
-  - "0.12"
-  - "0.11"
-  - "0.10"
+- '0.12'
+- '0.11'
+- '0.10'
+deploy:
+  provider: openshift
+  user: $OPENSHIFT_USERNAME
+  password:
+    secure: $OPENSHIFT_PASSWORD
+  app: $OPENSHIFT_APP
+  domain: $OPENSHIFT_DOMAIN
+  on:
+    repo: HalleyInteractive/new-release-notifier
+    branch: travis
