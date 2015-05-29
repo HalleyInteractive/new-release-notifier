@@ -6,8 +6,7 @@ node_js:
 deploy:
   provider: openshift
   user: $OPENSHIFT_USERNAME
-  password:
-    secure: $OPENSHIFT_PASSWORD
+  password: $OPENSHIFT_PASSWORD
   app: $OPENSHIFT_APP
   domain: $OPENSHIFT_DOMAIN
   on:
