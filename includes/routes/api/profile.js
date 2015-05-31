@@ -3,6 +3,7 @@
 var express = require('express');
 var router = express.Router();
 var User = require(global.nrn.base + '/db/user.js');
+var Album = require(global.nrn.base + '/db/album.js');
 
 router.get('/api/profile', function(req, res, next)
 {
@@ -54,6 +55,14 @@ router.get('/api/profile/pushbullet/devicelist', function(req, res, next)
 	} else {
 		res.sendStatus(500);
 	}
+});
+
+router.get('/api/profile/notifications', function(req, res, next)
+{
+	Album.find({user:req.user._id}).exec(function(err, notifications)
+	{
+		res.json(notifications);
+	});
 });
 
 function getCronTimeString(cronTimeObject)
