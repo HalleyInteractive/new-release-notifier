@@ -1,0 +1,23 @@
+<div class="sixteen wide column">
+  <h2>Notifications</h2>
+
+  <div class="ui cards">
+
+    <div class="card" ng-repeat="notification in notifications">
+      <a class="image">
+        <img ng-src="{{notification.image[3]['#text']}}">
+      </a>
+      <div class="content">
+        <a class="header">{{notification.name}}</a>
+        <div class="meta">
+          <a>{{notification.artist.name}}</a>
+        </div>
+        <div class="description">
+          {{notification.date}}
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>

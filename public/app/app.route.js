@@ -14,6 +14,10 @@
             templateUrl: 'app/components/profile/profile-view.html',
             controller: 'ProfileCtrl'
         }).
+        when('/notifications', {
+          templateUrl:'app/components/notifications/notifications-view.html',
+          controller: 'NotificationsCtrl'
+        }).
         otherwise({
             redirectTo: '/'
         });
